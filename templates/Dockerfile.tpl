@@ -33,6 +33,6 @@ ADD scripts/gremlin.sh /usr/sbin/gremlin
 RUN /tmp/install-hadoop2.sh
 RUN /tmp/install-cassandra.sh CASSANDRA_VERSION
 RUN /tmp/install-elasticsearch.sh ELASTICSEARCH_VERSION
-RUN /tmp/install-titan.sh TITAN_VERSION
+RUN /tmp/install-titan.sh TITAN_VERSION TITAN_BRANCH
 
 CMD ["gremlin"]
