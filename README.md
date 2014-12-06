@@ -4,7 +4,7 @@ Quick Start
 ## Clone this repository
 
 ```sh
-git clone https://github.com/dkuppitz/titan-docker.git
+git clone https://github.com/phani1kumar/titan-docker.git
 ```
 
 ## Symbolic link
