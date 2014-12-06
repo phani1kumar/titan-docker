@@ -1,10 +1,10 @@
 #!/bin/bash
 
 display_usage() {
-  echo -e "\nUsage: $0 [-t TITAN-VERSION] [-c CASSANDRA-VERSION] [-e ELASTICSEARCH-VERSION]\n"
+  echo -e "\nUsage: $0 [-t TITAN-VERSION] [-b TITAN-BRANCH] [-c CASSANDRA-VERSION] [-e ELASTICSEARCH-VERSION]\n"
 }
 
-while getopts ":t:c:e:" opt; do
+while getopts ":t:c:e:b:" opt; do
   case $opt in
     t)
       TITAN_VERSION=$OPTARG
@@ -14,6 +14,9 @@ while getopts ":t:c:e:" opt; do
       ;;
     e)
       ELASTICSEARCH_VERSION=$OPTARG
+      ;;
+    b)
+      TITAN_BRANCH=$OPTARG
       ;;
     \?)
       display_usage
@@ -32,6 +35,7 @@ DIR=$(dirname `readlink -f $0`)
 cd $DIR
 
 TITAN_VERSION=`./get-titan-version.sh $TITAN_VERSION`
+TITAN_BRANCH=`./get-titan-branch.sh $TITAN_BRANCH`
 
 if [ -z $CASSANDRA_VERSION ]; then
   CASSANDRA_VERSION=`./get-cassandra-version.sh $TITAN_VERSION`
@@ -42,7 +46,7 @@ if [ -z $ELASTICSEARCH_VERSION ]; then
 fi
 
 cd ..
-sed -e "s/CASSANDRA_VERSION/$CASSANDRA_VERSION/g" -e "s/TITAN_VERSION/$TITAN_VERSION/g" templates/Dockerfile.tpl > Dockerfile
+sed -e "s/CASSANDRA_VERSION/$CASSANDRA_VERSION/g" -e "s/TITAN_VERSION/$TITAN_VERSION/g" -e "s/TITAN_BRANCH/$TITAN_BRANCH/g" templates/Dockerfile.tpl > Dockerfile
 cp templates/gremlin.sh.tpl scripts/gremlin.sh
 
 if [ "$TITAN_VERSION" != "`echo -e "$TITAN_VERSION\n0.5.0" | sort -rV | head -n1`" ]; then
