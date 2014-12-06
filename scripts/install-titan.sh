@@ -1,9 +1,10 @@
 #!/bin/bash
 
 TITAN_VERSION=$1
+TITAN_BRANCH=$2
 
-git clone https://github.com/thinkaurelius/titan.git && cd titan/
-git checkout tags/$TITAN_VERSION
+git clone https://github.com/thinkaurelius/titan.git --branch $TITAN_BRANCH --single-branch && cd titan/
+#git checkout tags/$TITAN_VERSION
 
 MVN_OPTS="-DskipTests"
 
