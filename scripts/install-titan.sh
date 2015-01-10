@@ -3,8 +3,12 @@
 TITAN_VERSION=$1
 TITAN_BRANCH=$2
 
-git clone https://github.com/thinkaurelius/titan.git --branch $TITAN_BRANCH --single-branch && cd titan/
-#git checkout tags/$TITAN_VERSION
+if [ "$TITAN_BRANCH" == "master" ]; then
+  git clone https://github.com/thinkaurelius/titan.git && cd titan/
+else
+  git clone https://github.com/thinkaurelius/titan.git --branch $TITAN_BRANCH --single-branch && cd titan/
+fi
+git checkout tags/$TITAN_VERSION
 
 MVN_OPTS="-DskipTests"
 
